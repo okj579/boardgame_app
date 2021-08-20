@@ -9,7 +9,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: bahmutov/npm-install@v1
-      with:
+      with: 
         working-directory: |
           api
           ui
@@ -21,3 +21,22 @@ jobs:
     - name: Build UI
       run: npm run build
       working-directory: ui
+  
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: deployment
+    #if: github.ref == 'refs/heads/master'
+    needs: build
+    steps:
+    - run: echo ${{github.ref}} ${{github.sha}}
+    - uses: octokit/request-action@v2.x
+      with:
+        route: POST /repos/${{github.repository}}/deployment
+        ref: ${{github.ref}}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+    
+    
+    
