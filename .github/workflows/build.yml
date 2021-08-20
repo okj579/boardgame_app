@@ -3,35 +3,21 @@ name: Build
 on: push
 
 jobs:
-  build_api:
-    name: Build API
+  build:
+    name: Build
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./api
     steps:
     - uses: actions/checkout@v2
-    
-    - name: Set up Node
-      uses: actions/setup-node@v1
-      with: {node-version: 12.x}
-    
-    - run: npm install
-    - run: npm run build
-
-  build_ui:
-    name: Build UI
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./ui
-    steps:
-    - uses: actions/checkout@v2
-    
-    - name: Set up Node
-      uses: actions/setup-node@v1
+    - uses: bahmutov/npm-install@v1
       with:
-        node-version: 12.x
+        working-directory: |
+          api
+          ui
+  
+    - name: Build API
+      run: npm run build
+      working-directory: api
     
-    - run: npm install
-    - run: npm run build 
+    - name: Build UI
+      run: npm run build
+      working-directory: ui
