@@ -23,21 +23,9 @@ jobs:
         cd api
         npm install
         npm run build
-    
-    - name: Test API
-      run: |
-        cd api
-        echo $(pwd)
-        npm run test
-    
+
     - name: Build UI
       run: |
         cd ui
         npm install
-        npm run build
-        
-    - name: Test UI
-      run: |
-        cd ui
-        npm run test
-    
+        npm run build    
