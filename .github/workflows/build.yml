@@ -7,6 +7,7 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
+    - run: echo ${{github.ref}} ${{github.sha}}
     - uses: actions/checkout@v2
     - uses: bahmutov/npm-install@v1
       with: 
