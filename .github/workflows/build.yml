@@ -5,27 +5,30 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [12.x]
-    
     steps:
     - uses: actions/checkout@v2
 
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Set up Node
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 12.x
+    
+    - name: (API) npm install
+      run: |
+        cd api 
+        npm install
 
-    - name: Build API
+    - name: (API) build
       run: |
         cd api
-        npm install
         npm run build
 
-    - name: Build UI
+    - name: (UI) npm install
       run: |
         cd ui
         npm install
-        npm run build    
+
+    - name: (UI) build
+      run: |
+        cd ui
+        npm run build 
